@@ -65,18 +65,18 @@ def parse_and_get_df(idn):
     showmulti = [show for i in range(len(name))]
 
     # create dataframe for the series
-    dfx= pd.DataFrame(OrderedDict((('series', pd.Series(showmulti)),
-                                     ('name', pd.Series(name)),
-                                     ('season', pd.Series(seasonlist)),
-                                     ('number', pd.Series(epnumbers)),
-                                     ('rating', pd.Series(ratings)))))
+    dfx = pd.DataFrame(OrderedDict((('series', pd.Series(showmulti)),
+                                    ('name', pd.Series(name)),
+                                    ('season', pd.Series(seasonlist)),
+                                    ('number', pd.Series(epnumbers)),
+                                    ('rating', pd.Series(ratings)))))
 
     # print(json.loads(dfx.to_json(orient='records')))
     # return json.loads(dfx.to_json(orient='records'))
     return dfx
 
-def main_df(arr):
 
+def main_df(arr):
     with Pool(4) as p:
         dfs = p.map(parse_and_get_df, arr)
 
