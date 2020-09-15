@@ -65,11 +65,12 @@ def parse_and_get_df(idn):
     showmulti = [show for i in range(len(name))]
 
     # create dataframe for the series
-    dfx = pd.DataFrame(OrderedDict((('series', pd.Series(showmulti)),
+    dfx = {idn: pd.DataFrame(OrderedDict((('series', pd.Series(showmulti)),
                                     ('name', pd.Series(name)),
                                     ('season', pd.Series(seasonlist)),
                                     ('number', pd.Series(epnumbers)),
-                                    ('rating', pd.Series(ratings)))))
+                                    ('rating', pd.Series(ratings))))).to_dict(orient='records')
+          }
 
     # print(json.loads(dfx.to_json(orient='records')))
     # return json.loads(dfx.to_json(orient='records'))
@@ -80,12 +81,14 @@ def main_df(arr):
     with Pool(4) as p:
         dfs = p.map(parse_and_get_df, arr)
 
-    # dfs = list(parse_and_get_df(idn) for idn in arr)
-    df = pd.concat(dfs)
-    df = df.reset_index()
+    final=dict((key,d[key]) for d in dfs for key in d)
+#     dfs = list(parse_and_get_df(idn) for idn in arr)
+#     df = pd.concat(dfs)
+#     df = df.reset_index()
 
-    print(json.loads(df.to_json(orient='records')))
-    return json.loads(df.to_json(orient='records'))
+    #print(json.loads(df.to_json(orient='records')))
+    return final
+
 
 
 if __name__ == '__main__':
