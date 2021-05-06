@@ -13,7 +13,7 @@ cryptography==2.8
 entrypoints==0.3
 flake8==3.7.9
 Flask==1.1.1
-Flask-Cors==3.0.7
+Flask-Cors==3.0.9
 idna==2.6
 importlib-metadata==0.23
 itsdangerous==1.1.0
